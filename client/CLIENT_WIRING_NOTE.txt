@@ -1,0 +1,43 @@
+HOW TO WIRE THIS INTO YOUR EXISTING REACT APP (Week 1)
+=========================================================
+
+1) Copy these files into your existing client/src/ folder, keeping the structure:
+
+   client/src/api/axios.js
+   client/src/services/tripService.js
+   client/src/components/TripCard.jsx
+   client/src/components/TripCard.css
+   client/src/components/TripForm.jsx
+   client/src/components/TripForm.css
+   client/src/pages/Dashboard.jsx
+   client/src/pages/Dashboard.css
+
+2) If you already have your own axios instance/interceptor from Week 1
+   (e.g. client/src/api.js or client/src/utils/axiosInstance.js), just
+   update the import path in tripService.js to point to YOUR file instead
+   of api/axios.js — don't run two separate axios instances.
+
+   Also check what key your Week 1 login flow stores the JWT under
+   (localStorage.getItem('token') vs 'accessToken' vs stored in context) —
+   axios.js assumes 'token'. Update this to match.
+
+3) Add the Dashboard as a protected route in your router (React Router
+   example, adjust to however Week 1 set up protected routes):
+
+   import Dashboard from './pages/Dashboard';
+
+   <Route
+     path="/dashboard"
+     element={
+       <ProtectedRoute>
+         <Dashboard />
+       </ProtectedRoute>
+     }
+   />
+
+4) Make sure your login page redirects to /dashboard after a successful
+   login, and that ProtectedRoute (from Week 1) checks for the token
+   before rendering.
+
+That's it — Dashboard.jsx handles fetching, creating, editing, deleting,
+loading/error states, and the empty state entirely on its own.

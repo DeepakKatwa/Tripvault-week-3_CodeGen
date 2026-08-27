@@ -1,0 +1,40 @@
+HOW TO WIRE THIS INTO YOUR EXISTING server.js (Week 1)
+========================================================
+
+You should already have something like this in server.js from Week 1:
+
+  const express = require('express');
+  const mongoose = require('mongoose');
+  const cors = require('cors');
+  require('dotenv').config();
+
+  const authRoutes = require('./routes/authRoutes');
+
+  const app = express();
+  app.use(cors());
+  app.use(express.json());
+
+  app.use('/api/auth', authRoutes);
+
+  mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log(err));
+
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+To add Week 2, just add TWO lines:
+
+  const tripRoutes = require('./routes/tripRoutes');   // <-- add this
+  ...
+  app.use('/api/trips', tripRoutes);                    // <-- add this
+
+That's it. Everything else (auth middleware, User model, JWT secret in .env)
+should already exist from Week 1 and doesn't need to change.
+
+CHECKLIST before testing:
+- [ ] middleware/auth.js exists and sets req.user.id from the JWT payload
+      (your Week 1 login route must sign the token with { id: user._id })
+- [ ] JWT_SECRET is set in .env and matches what login uses to sign tokens
+- [ ] models/User.js exists (Trip.js references it via ref: 'User')
+- [ ] MONGO_URI is set in .env

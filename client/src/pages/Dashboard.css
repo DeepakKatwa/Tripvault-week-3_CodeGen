@@ -1,0 +1,1467 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --dark: #102b3a;
+  --dark-2: #0b2230;
+  --sidebar-text: #b7cad3;
+  --primary: #147c85;
+  --primary-light: #e7f4f3;
+  --secondary: #ec7956;
+  --background: #f4f7f7;
+  --white: #ffffff;
+  --text: #173646;
+  --muted: #71848d;
+  --border: #e3ebed;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.tripvault-layout {
+  min-height: 100vh;
+  background: #f4f7f7;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.tripvault-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 260px;
+  height: 100vh;
+
+  background:
+    linear-gradient(
+      180deg,
+      #113448 0%,
+      #0e2e40 55%,
+      #092432 100%
+    );
+
+  padding: 28px 18px 22px;
+
+  display: flex;
+  flex-direction: column;
+
+  color: white;
+
+  z-index: 500;
+}
+
+.tripvault-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 8px;
+  margin-bottom: 42px;
+}
+
+.tripvault-logo-icon {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ee8563,
+      #db6042
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+
+  box-shadow:
+    0 9px 25px
+      rgba(224, 97, 64, 0.25);
+}
+
+.tripvault-logo h2 {
+  margin: 0;
+
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tripvault-logo span {
+  display: block;
+
+  font-size: 10px;
+  color: #87a5b3;
+
+  margin-top: 3px;
+}
+
+.sidebar-label {
+  padding-left: 13px;
+
+  color: #6f94a6;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+
+  margin-bottom: 10px;
+}
+
+.tripvault-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nav-item {
+  width: 100%;
+  height: 49px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: var(--sidebar-text);
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 0 14px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.nav-item:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.07);
+
+  transform: translateX(3px);
+}
+
+.nav-item.active {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(30, 137, 147, 0.35),
+      rgba(30, 137, 147, 0.12)
+    );
+
+  color: white;
+  font-weight: 700;
+
+  box-shadow:
+    inset 3px 0 0 #ed7b59;
+}
+
+.nav-icon {
+  width: 20px;
+  text-align: center;
+
+  font-size: 17px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  padding-top: 18px;
+}
+
+.sidebar-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 6px;
+}
+
+.profile-avatar,
+.top-profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: white;
+
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2c9ca3,
+      #126e78
+    );
+}
+
+.profile-avatar {
+  width: 41px;
+  height: 41px;
+
+  min-width: 41px;
+}
+
+.profile-info {
+  overflow: hidden;
+}
+
+.profile-info strong {
+  display: block;
+
+  font-size: 12px;
+}
+
+.profile-info span {
+  display: block;
+
+  color: #83a2b0;
+
+  font-size: 9px;
+
+  margin-top: 3px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  max-width: 155px;
+}
+
+.sidebar-logout {
+  width: 100%;
+  height: 43px;
+
+  margin-top: 12px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.13);
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #c4d5dc;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: white;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.tripvault-main {
+  margin-left: 260px;
+
+  min-height: 100vh;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.tripvault-topbar {
+  height: 82px;
+
+  padding: 0 38px;
+
+  background: rgba(255, 255, 255, 0.93);
+
+  backdrop-filter: blur(15px);
+
+  border-bottom: 1px solid #e5ebed;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 300;
+}
+
+.tripvault-topbar h3 {
+  margin: 0;
+
+  font-family: "Manrope", sans-serif;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tripvault-topbar p {
+  margin: 4px 0 0;
+
+  color: var(--muted);
+
+  font-size: 10px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+.dashboard-search {
+  width: 250px;
+  height: 42px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 12px;
+
+  background: #f8faf9;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 13px;
+
+  color: #899ba3;
+}
+
+.dashboard-search input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-family: inherit;
+
+  color: var(--text);
+
+  font-size: 11px;
+}
+
+.notification-btn {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+
+  border: 1px solid var(--border);
+
+  background: white;
+
+  color: #637b86;
+
+  cursor: pointer;
+}
+
+.notification-btn span {
+  position: absolute;
+
+  top: 9px;
+  right: 10px;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #ec7654;
+}
+
+.top-profile {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding-left: 4px;
+}
+
+.top-profile-avatar {
+  width: 37px;
+  height: 37px;
+
+  font-size: 12px;
+}
+
+.top-profile strong {
+  display: block;
+
+  font-size: 11px;
+}
+
+.top-profile span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--muted);
+
+  font-size: 9px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.tripvault-content {
+  max-width: 1450px;
+
+  padding: 34px 38px 70px;
+
+  margin: 0 auto;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 24px;
+}
+
+.welcome-label {
+  margin: 0;
+
+  color: var(--secondary);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.welcome-section h1 {
+  margin: 6px 0 0;
+
+  font-family: "Manrope", sans-serif;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  letter-spacing: -1px;
+
+  color: #16384a;
+}
+
+.welcome-section h1 span {
+  color: #147b84;
+}
+
+.welcome-text {
+  margin: 7px 0 0;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.new-trip-btn {
+  height: 45px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ee7e5b,
+      #d95d3e
+    );
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  font-weight: 700;
+  font-size: 12px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 24px
+      rgba(217, 93, 62, 0.22);
+
+  transition: 0.2s;
+}
+
+.new-trip-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 28px
+      rgba(217, 93, 62, 0.3);
+}
+
+/* =========================
+   UNIQUE HERO
+========================= */
+
+.travel-hero {
+  min-height: 245px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      125deg,
+      #10384d 0%,
+      #176b78 62%,
+      #208c8a 100%
+    );
+
+  color: white;
+
+  padding: 38px;
+
+  display: flex;
+
+  margin-bottom: 22px;
+
+  box-shadow:
+    0 16px 40px
+      rgba(18, 56, 73, 0.14);
+}
+
+.hero-left {
+  position: relative;
+
+  z-index: 5;
+
+  max-width: 590px;
+}
+
+.hero-tag {
+  display: inline-flex;
+
+  padding: 7px 10px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.13);
+
+  border-radius: 8px;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+
+  color: #a4e6df;
+}
+
+.travel-hero h2 {
+  margin: 13px 0 0;
+
+  max-width: 480px;
+
+  font-family: "Manrope", sans-serif;
+
+  font-size: 31px;
+  line-height: 1.18;
+
+  font-weight: 800;
+}
+
+.travel-hero p {
+  max-width: 510px;
+
+  margin: 10px 0 0;
+
+  color: #c1d9df;
+
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.hero-button {
+  height: 42px;
+
+  margin-top: 20px;
+
+  padding: 0 15px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #145269;
+
+  font-weight: 700;
+  font-size: 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+}
+
+.hero-art {
+  position: absolute;
+
+  right: 70px;
+  top: 28px;
+
+  width: 210px;
+  height: 190px;
+}
+
+.hero-globe {
+  position: absolute;
+
+  right: 0;
+  top: 10px;
+
+  width: 165px;
+  height: 165px;
+
+  border-radius: 50%;
+
+  border:
+    2px solid rgba(255, 255, 255, 0.09);
+
+  color:
+    rgba(255, 255, 255, 0.13);
+
+  font-size: 110px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-plane {
+  position: absolute;
+
+  left: 8px;
+  top: 27px;
+
+  font-size: 31px;
+
+  transform: rotate(-15deg);
+
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-location {
+  position: absolute;
+
+  right: 25px;
+  bottom: 3px;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: #ed7857;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  box-shadow:
+    0 9px 25px
+      rgba(222, 97, 67, 0.35);
+}
+
+.hero-decoration {
+  position: absolute;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-circle-one {
+  width: 310px;
+  height: 310px;
+
+  right: -80px;
+  top: -150px;
+}
+
+.hero-circle-two {
+  width: 200px;
+  height: 200px;
+
+  right: 190px;
+  bottom: -155px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.dashboard-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  min-height: 112px;
+
+  background: white;
+
+  border-radius: 17px;
+
+  border: 1px solid var(--border);
+
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  transition: 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 12px 30px
+      rgba(16, 54, 70, 0.08);
+}
+
+.stat-icon {
+  width: 47px;
+  height: 47px;
+
+  min-width: 47px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-size: 19px;
+}
+
+.stat-icon.blue {
+  background: #e8f3f6;
+  color: #267b91;
+}
+
+.stat-icon.green {
+  background: #e7f5f1;
+  color: #248a75;
+}
+
+.stat-icon.orange {
+  background: #fff0e9;
+  color: #df7351;
+}
+
+.stat-icon.purple {
+  background: #f2edfa;
+  color: #7a61a8;
+}
+
+.stat-card span {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+.stat-card h3 {
+  margin: 2px 0 0;
+
+  font-family: "Manrope", sans-serif;
+
+  font-size: 23px;
+}
+
+.stat-card p {
+  margin: 2px 0 0;
+
+  color: #9aabb2;
+
+  font-size: 9px;
+}
+
+/* =========================
+   TRIPS SECTION
+========================= */
+
+.trips-section {
+  background: white;
+
+  border-radius: 21px;
+
+  border: 1px solid var(--border);
+
+  padding: 24px;
+
+  margin-bottom: 21px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 21px;
+}
+
+.section-heading p,
+.quick-heading p {
+  margin: 0;
+
+  color: var(--secondary);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+.section-heading h2,
+.quick-heading h2 {
+  margin: 4px 0 0;
+
+  font-family: "Manrope", sans-serif;
+
+  font-size: 20px;
+}
+
+.section-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.section-actions > span {
+  color: var(--muted);
+
+  font-size: 10px;
+}
+
+.section-add-btn {
+  border: 1px solid #cee2e1;
+
+  border-radius: 9px;
+
+  background: #eff8f7;
+
+  color: #187880;
+
+  height: 36px;
+
+  padding: 0 13px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* =========================
+   TRIP CARDS GRID
+========================= */
+
+.dashboard-trip-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+/*
+ Your existing TripCard CSS can still work.
+ These rules improve the card if its
+ top class is .trip-card.
+*/
+
+.dashboard-trip-grid .trip-card {
+  border-radius: 17px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+
+  box-shadow:
+    0 5px 20px
+      rgba(15, 50, 67, 0.05);
+
+  transition: 0.23s;
+}
+
+.dashboard-trip-grid .trip-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 15px 32px
+      rgba(15, 50, 67, 0.11);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.dashboard-loading {
+  min-height: 230px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.loading-plane {
+  font-size: 34px;
+
+  animation:
+    planeFloat 1.5s
+    ease-in-out infinite;
+}
+
+@keyframes planeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.dashboard-loading h3 {
+  margin: 10px 0 0;
+
+  font-size: 14px;
+}
+
+.dashboard-loading p {
+  margin: 5px 0 0;
+
+  color: var(--muted);
+
+  font-size: 10px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.dashboard-empty {
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border:
+    1px dashed #d2e0e3;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fbfdfc,
+      #f7faf9
+    );
+}
+
+.empty-plane {
+  width: 66px;
+  height: 66px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e5f4f1,
+      #d7efea
+    );
+
+  color: #23878a;
+
+  font-size: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 14px;
+}
+
+.empty-label {
+  margin: 0;
+
+  color: var(--secondary) !important;
+
+  font-size: 8px !important;
+
+  letter-spacing: 1.5px;
+
+  font-weight: 800;
+}
+
+.dashboard-empty h2 {
+  margin: 6px 0 0;
+
+  font-family: "Manrope", sans-serif;
+
+  font-size: 20px;
+}
+
+.dashboard-empty > p {
+  max-width: 430px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.6;
+
+  margin:
+    8px 0 17px;
+}
+
+.empty-create-btn {
+  border: none;
+
+  height: 42px;
+
+  padding: 0 16px;
+
+  border-radius: 10px;
+
+  background: var(--dark);
+
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.dashboard-error-box {
+  min-height: 230px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #fffafa;
+
+  border: 1px solid #f4d6d0;
+
+  border-radius: 15px;
+}
+
+.dashboard-error-box > div {
+  width: 45px;
+  height: 45px;
+
+  border-radius: 50%;
+
+  background: #feeae6;
+
+  color: #cf5d45;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 800;
+}
+
+.dashboard-error-box h3 {
+  margin: 10px 0 0;
+
+  font-size: 14px;
+}
+
+.dashboard-error-box p {
+  margin: 5px 0 13px;
+
+  color: #8d6d67;
+
+  font-size: 10px;
+}
+
+.dashboard-error-box button {
+  border: none;
+
+  background: #d86449;
+
+  color: white;
+
+  padding: 9px 14px;
+
+  border-radius: 8px;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   SEARCH EMPTY
+========================= */
+
+.search-empty {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  color: var(--muted);
+}
+
+.search-empty > div {
+  font-size: 30px;
+}
+
+.search-empty h3 {
+  margin: 8px 0 0;
+
+  color: var(--text);
+}
+
+.search-empty p {
+  font-size: 11px;
+}
+
+.search-empty button {
+  border: none;
+
+  background: #e9f4f3;
+
+  color: #17757e;
+
+  border-radius: 8px;
+
+  padding: 8px 12px;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-actions-section {
+  background: white;
+
+  border-radius: 21px;
+
+  border: 1px solid var(--border);
+
+  padding: 24px;
+}
+
+.quick-heading {
+  margin-bottom: 18px;
+}
+
+.quick-cards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 14px;
+}
+
+.quick-card {
+  min-height: 82px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 14px;
+
+  background: #fbfcfc;
+
+  padding: 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.quick-card:hover {
+  background: #f5faf9;
+
+  border-color: #c9dfdd;
+
+  transform: translateY(-3px);
+}
+
+.quick-card-icon {
+  width: 43px;
+  height: 43px;
+
+  min-width: 43px;
+
+  border-radius: 12px;
+
+  background: #e6f4f2;
+
+  color: #20858a;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+.quick-card strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 11px;
+}
+
+.quick-card span {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 9px;
+
+  margin-top: 3px;
+}
+
+.quick-card b {
+  margin-left: auto;
+
+  color: #8fa1a9;
+
+  font-weight: 400;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .dashboard-stats {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .dashboard-trip-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .quick-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 950px) {
+  .tripvault-sidebar {
+    width: 80px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .tripvault-logo {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .tripvault-logo > div:last-child,
+  .sidebar-label,
+  .nav-item:not(.active) {
+  }
+
+  .tripvault-logo h2,
+  .tripvault-logo span,
+  .nav-item {
+    font-size: 0;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .nav-icon {
+    font-size: 18px;
+  }
+
+  .profile-info,
+  .sidebar-logout {
+    display: none;
+  }
+
+  .sidebar-profile {
+    justify-content: center;
+  }
+
+  .tripvault-main {
+    margin-left: 80px;
+  }
+
+  .hero-art {
+    opacity: 0.45;
+  }
+}
+
+@media (max-width: 720px) {
+  .tripvault-topbar {
+    padding: 0 18px;
+  }
+
+  .dashboard-search {
+    display: none;
+  }
+
+  .top-profile > div:last-child {
+    display: none;
+  }
+
+  .tripvault-content {
+    padding:
+      24px 18px 50px;
+  }
+
+  .welcome-section {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .welcome-section h1 {
+    font-size: 26px;
+  }
+
+  .travel-hero {
+    padding: 28px 23px;
+
+    min-height: 275px;
+  }
+
+  .travel-hero h2 {
+    font-size: 25px;
+  }
+
+  .hero-art {
+    right: -35px;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-trip-grid {
+    grid-template-columns: 1fr;
+  }
+}
