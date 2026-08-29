@@ -1,163 +1,107 @@
-TripVault — Week 3
+# 🗺️ TripVault
+
+A full-stack MERN travel-journaling app where users can log their trips, attach photos, and share a public profile showcasing their travel history — no login required to view.
+
+Built as part of the **CodGen Virtual Internship Program (Full Stack MERN)**.
+
+---
+
+## ✨ Features
+
+### Trip Management
+- Create, edit, and delete personal trips
+- Track title, destination, dates, and rating
+
+### 📸 Photo Uploads *(New in Week 3)*
+- Upload a cover image and multiple trip photos via **Cloudinary**
+- Image previews on Create/Edit Trip forms
+- Cover image displayed on each trip card
+- Full photo grid on the trip detail page
+
+### 👤 Public Profiles *(New in Week 3)*
+- Public, no-login profile page at `/profile/:username`
+- Displays name, bio, and a grid of the user's trips
+- Users can edit their own bio from the dashboard
+- Sensitive fields (email, password) are never exposed on public routes
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:** React, Axios
+**Backend:** Node.js, Express
+**Database:** MongoDB (Mongoose)
+**Media Storage:** Cloudinary
+**File Handling:** Multer, multer-storage-cloudinary
+**Auth:** JWT
+
+---
+
+## 📁 Project Structure
+
+```
+tripvault/
+├── client/                 # React frontend
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       │   └── Profile/    # Public profile page
+│       └── ...
+├── server/                 # Express backend
+│   ├── middleware/
+│   │   └── upload.js       # Multer + Cloudinary config
+│   ├── models/
+│   │   ├── Trip.js
+│   │   └── User.js
+│   ├── routes/
+│   │   ├── tripRoutes.js
+│   │   └── userRoutes.js
+│   ├── controllers/
+│   └── .env                # Not committed — see below
+└── README.md
+```
+
+---
+
+## 🔌 API Routes
+
+| Method | Route | Auth | Description |
+|--------|-------|------|-------------|
+| POST | `/api/trips` | Yes | Create a new trip |
+| GET | `/api/trips` | Yes | Get logged-in user's trips |
+| PUT | `/api/trips/:id` | Yes | Update a trip |
+| DELETE | `/api/trips/:id` | Yes | Delete a trip |
+| **POST** | **`/api/trips/:id/upload`** | **Yes** | **Upload a photo, attach Cloudinary URL to trip** |
+| **GET** | **`/api/users/:username/profile`** | **No** | **Public profile — user info + all their trips** |
+| **PUT** | **`/api/users/profile`** | **Yes** | **Update logged-in user's bio or username** |
+
+> Public routes explicitly `.select()` only safe fields — email and password are never returned.
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/<your-username>/tripvault.git
+cd tripvault
+```
+
+### 2. Install dependencies
+```bash
+# Backend
+cd server
+npm install
+
+# Frontend
+cd ../client
+npm install
+```
+
+### 3. Configure environment variables
+Create a `.env` file inside `/server`:
 
-TripVault is a MERN stack travel planning application developed as part of the CodGen Virtual Internship Program.
-
-Week 3 Theme
-
-Photo Uploads & Public Profiles
-
-Week 3 focuses on adding cloud-based photo uploads using Cloudinary and building public traveller profile pages that can be viewed without login. These are the two main features required for Week 3.
-
-Tech Stack
-
-React
-
-Node.js
-
-Express.js
-
-MongoDB
-
-Cloudinary
-
-Multer
-
-Axios
-
-JWT Authentication
-
-Week 3 Features
-
-1. Photo Uploads with Cloudinary
-
-Users can upload photos for their trips.
-
-Implemented features:
-
-Cloudinary account and backend configuration
-
-Multer file upload middleware
-
-multer-storage-cloudinary integration
-
-coverImage field added to the Trip model
-
-photos array added to the Trip model
-
-Upload API route:
-
-POST /api/trips/:id/upload
-
-Image upload from Create Trip form
-
-Image upload from Edit Trip form
-
-Image preview before upload
-
-Trip cover image displayed on dashboard trip cards
-
-Uploaded photo count displayed on trip cards
-
-Single trip detail page
-
-Photo grid showing uploaded trip photos
-
-File-size limit for uploaded images
-
-2. Public User Profiles
-
-Users now have public traveller profiles.
-
-Implemented features:
-
-Unique username field added to User model
-
-Bio field added to User model
-
-Public profile API:
-
-GET /api/users/:username/profile
-
-Public profile does not expose email, password, or sensitive information
-
-React public profile page:
-
-/profile/:username
-
-Public profile works without login
-
-Profile page displays:
-
-Traveller name
-
-Username
-
-Bio
-
-Public trip cards
-
-Destination
-
-Dates
-
-Rating
-
-Cover image
-
-My Profile button added to dashboard
-
-Edit Profile option added
-
-Users can update name, username, and bio
-
-Profile update API:
-
-PUT /api/users/profile
-
-Public profile tested successfully in Incognito mode
-
-Week 3 API Routes
-
-Method
-
-Route
-
-Authentication
-
-Description
-
-POST
-
-/api/trips/:id/upload
-
-Required
-
-Upload a photo and attach its Cloudinary URL to a trip
-
-GET
-
-/api/users/:username/profile
-
-Not Required
-
-View a traveller's public profile and trips
-
-PUT
-
-/api/users/profile
-
-Required
-
-Update the logged-in user's profile
-
-Backend Packages Added
-
-npm install multer cloudinary multer-storage-cloudinary
-
-Environment Variables
-
-Create a .env file inside the server folder.
-
+```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
@@ -165,144 +109,40 @@ JWT_SECRET=your_jwt_secret
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+```
 
-CLIENT_URL=http://localhost:5173
+> Get your Cloudinary credentials by creating a free account at [cloudinary.com](https://cloudinary.com).
 
-Never commit the real .env file or expose MongoDB, JWT, or Cloudinary credentials in GitHub.
-
-Project Structure
-
-tripvault/
-├── client/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   │   ├── AuthPage.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Documents.jsx
-│   │   │   ├── Memories.jsx
-│   │   │   ├── TripDetails.jsx
-│   │   │   ├── Profile.jsx
-│   │   │   └── EditProfile.jsx
-│   │   ├── services/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   └── package.json
-│
-├── server/
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── tripController.js
-│   │   └── userController.js
-│   ├── middleware/
-│   │   ├── auth.js
-│   │   └── upload.js
-│   ├── models/
-│   │   ├── User.js
-│   │   └── Trip.js
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── tripRoutes.js
-│   │   └── userRoutes.js
-│   ├── .env
-│   └── server.js
-│
-├── .gitignore
-└── README.md
-
-How to Run the Project
-
-Backend
-
-Open a terminal:
-
-cd server
-npm install
+### 4. Run the app
+```bash
+# From /server
 npm run dev
 
-The backend runs at:
+# From /client (in a separate terminal)
+npm start
+```
 
-http://localhost:5000
+The backend runs on `http://localhost:5000` and the frontend on `http://localhost:3000`.
 
-Frontend
+---
 
-Open another terminal:
+## 🔒 Security Notes
 
-cd client
-npm install
-npm run dev
+- Cloudinary credentials are stored only in `.env` (excluded via `.gitignore`) — never hardcoded or committed
+- The public profile route uses explicit field selection to guarantee `email` and `password` are never exposed
+- File uploads are size-limited via Multer to prevent oversized uploads
 
-The frontend runs at:
+---
 
-http://localhost:5173
+## 🚀 Roadmap
 
-Testing the Public Profile
+- [x] Week 1 — Core trip CRUD
+- [x] Week 2 — Auth & user accounts
+- [x] Week 3 — Photo uploads (Cloudinary) & public profiles
+- [ ] Week 4 — Polish, testing & deployment
 
-Login to TripVault.
+---
 
-Open Edit Profile.
+## 👤 Author
 
-Add or update the username and bio.
-
-Save the profile.
-
-Open My Profile.
-
-Copy the public profile URL.
-
-Open an Incognito browser window.
-
-Paste the full profile URL, for example:
-
-http://localhost:5173/profile/deepak_1125
-
-The public profile should open without login.
-
-Week 3 Deliverables Status
-
-Cloudinary setup
-
-Upload middleware
-
-Trip model updated
-
-Photo upload route
-
-Photo upload UI
-
-Image preview
-
-Trip card cover images
-
-Trip detail photo grid
-
-User model updated with username and bio
-
-Public profile API
-
-Public profile React page
-
-Edit Profile
-
-My Profile dashboard link
-
-Public profile tested without authentication
-
-Security
-
-Passwords are never returned in public profile responses.
-
-Email is not exposed on public profiles.
-
-Cloudinary and MongoDB credentials are stored only in .env.
-
-Protected routes use JWT authentication.
-
-Uploads are restricted by file size and supported image formats.
-
-Week 3 Status
-
-Week 3 Development: Completed ✅
-
-The Week 3 requirements for Photo Uploads and Public Profiles have been implemented and tested successfully.
+Built by [Deepak katwa] as part of the TripVault Virtual Internship Program (CodGen).
