@@ -255,7 +255,7 @@ Open an Incognito browser window.
 
 Paste the full profile URL, for example:
 
-http://localhost:5173/profile/your_username
+http://localhost:5173/profile/deepak_1125
 
 The public profile should open without login.
 
