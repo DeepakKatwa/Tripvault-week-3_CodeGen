@@ -1,0 +1,416 @@
+/* =========================================
+   TRIPVAULT - PUBLIC PROFILE
+========================================= */
+
+.public-profile-page {
+  min-height: 100vh;
+  background: #f4f7f8;
+  padding: 50px 7%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #173b57;
+}
+
+/* =========================================
+   PROFILE HEADER
+========================================= */
+
+.public-profile-header {
+  max-width: 1150px;
+  margin: 0 auto 45px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+}
+
+.public-profile-avatar {
+  width: 105px;
+  height: 105px;
+  min-width: 105px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #173b57;
+  color: #ffffff;
+
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.profile-label {
+  margin: 0 0 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #8a9aa6;
+}
+
+.public-profile-header h1 {
+  margin: 0 0 6px;
+
+  font-size: 36px;
+  color: #173b57;
+}
+
+.profile-username {
+  display: inline-block;
+
+  margin-bottom: 15px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #4e7188;
+}
+
+.profile-bio {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: #667986;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   TRIPS SECTION
+========================================= */
+
+.public-profile-trips {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.profile-section-heading {
+  margin-bottom: 25px;
+
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.profile-section-heading p {
+  margin: 0 0 5px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #8a9aa6;
+}
+
+.profile-section-heading h2 {
+  margin: 0;
+
+  font-size: 30px;
+  color: #173b57;
+}
+
+.profile-section-heading > span {
+  background: #ffffff;
+
+  padding: 9px 15px;
+
+  border-radius: 20px;
+
+  color: #567084;
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   TRIP GRID
+========================================= */
+
+.public-trip-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+/* =========================================
+   TRIP CARD
+========================================= */
+
+.public-trip-card {
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 22px rgba(0, 0, 0, 0.07);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.public-trip-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================
+   COVER IMAGE
+========================================= */
+
+.public-trip-cover {
+  position: relative;
+
+  height: 200px;
+
+  overflow: hidden;
+
+  background: #dce6eb;
+}
+
+.public-trip-cover img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.4s ease;
+}
+
+.public-trip-card:hover
+  .public-trip-cover img {
+  transform: scale(1.04);
+}
+
+.public-trip-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #173b57,
+      #527d91
+    );
+
+  color: #ffffff;
+
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.public-trip-destination {
+  position: absolute;
+
+  left: 15px;
+  bottom: 15px;
+
+  max-width: calc(100% - 30px);
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(16, 42, 59, 0.82);
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  backdrop-filter: blur(5px);
+}
+
+/* =========================================
+   TRIP BODY
+========================================= */
+
+.public-trip-body {
+  padding: 20px;
+}
+
+.public-trip-title-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+.public-trip-title-row h3 {
+  margin: 0;
+
+  color: #173b57;
+
+  font-size: 19px;
+}
+
+.public-trip-title-row span {
+  white-space: nowrap;
+
+  color: #d79a27;
+
+  font-size: 14px;
+}
+
+.public-trip-body > p {
+  margin: 0;
+
+  color: #7a8c98;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   EMPTY PROFILE
+========================================= */
+
+.profile-empty {
+  padding: 65px 20px;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+.profile-empty > div {
+  margin-bottom: 12px;
+
+  font-size: 42px;
+}
+
+.profile-empty h3 {
+  margin: 0 0 8px;
+
+  color: #173b57;
+
+  font-size: 21px;
+}
+
+.profile-empty p {
+  margin: 0;
+
+  color: #7b8c97;
+
+  font-size: 14px;
+}
+
+/* =========================================
+   LOADING / ERROR
+========================================= */
+
+.profile-status {
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  background: #f4f7f8;
+
+  color: #173b57;
+
+  text-align: center;
+}
+
+.profile-status h2 {
+  margin: 0;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .public-trip-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .public-profile-page {
+    padding: 35px 5%;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+  .public-profile-page {
+    padding: 20px 15px;
+  }
+
+  .public-profile-header {
+    padding: 28px 20px;
+
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .public-profile-avatar {
+    width: 85px;
+    height: 85px;
+    min-width: 85px;
+
+    font-size: 34px;
+  }
+
+  .public-profile-header h1 {
+    font-size: 28px;
+  }
+
+  .profile-section-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .public-trip-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .public-trip-cover {
+    height: 220px;
+  }
+}

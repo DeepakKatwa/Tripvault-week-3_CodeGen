@@ -1,0 +1,265 @@
+/* =========================================
+   TRIPVAULT - EDIT PROFILE PAGE
+========================================= */
+
+.edit-profile-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #f4f7f8;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #173b57;
+}
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.edit-profile-card {
+  width: 100%;
+  max-width: 720px;
+  padding: 38px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.edit-profile-back {
+  margin-bottom: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #52758a;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-profile-back:hover {
+  color: #173b57;
+}
+
+/* =========================================
+   HEADING
+========================================= */
+
+.edit-profile-heading {
+  margin-bottom: 30px;
+}
+
+.edit-profile-heading p {
+  margin: 0 0 7px;
+  color: #8b9ba5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.edit-profile-heading h1 {
+  margin: 0 0 8px;
+  color: #173b57;
+  font-size: 34px;
+}
+
+.edit-profile-heading span {
+  color: #748894;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   ERROR / SUCCESS
+========================================= */
+
+.edit-profile-error,
+.edit-profile-success {
+  margin-bottom: 22px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.edit-profile-error {
+  background: #fff0f0;
+  border: 1px solid #f2c5c5;
+  color: #b63b3b;
+}
+
+.edit-profile-success {
+  background: #edf8f1;
+  border: 1px solid #c3e6cf;
+  color: #2d7b4b;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.edit-profile-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #294b61;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid #d5e0e5;
+  border-radius: 10px;
+  outline: none;
+  background: #fbfcfd;
+  color: #173b57;
+  font-family: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus {
+  border-color: #527d91;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(82, 125, 145, 0.12);
+}
+
+.edit-profile-form textarea {
+  min-height: 125px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.edit-profile-form input::placeholder,
+.edit-profile-form textarea::placeholder {
+  color: #a2afb7;
+}
+
+/* =========================================
+   SMALL TEXT
+========================================= */
+
+.edit-profile-form small {
+  color: #8b9aa3;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.edit-profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.edit-profile-cancel,
+.edit-profile-save {
+  min-width: 130px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.edit-profile-cancel {
+  border: 1px solid #d6e0e5;
+  background: #ffffff;
+  color: #567084;
+}
+
+.edit-profile-cancel:hover {
+  background: #f3f6f7;
+}
+
+.edit-profile-save {
+  border: none;
+  background: #173b57;
+  color: #ffffff;
+}
+
+.edit-profile-save:hover:not(:disabled) {
+  background: #0f2f47;
+  transform: translateY(-1px);
+}
+
+.edit-profile-save:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+  .edit-profile-page {
+    padding: 25px 15px;
+  }
+
+  .edit-profile-card {
+    padding: 30px 25px;
+  }
+
+  .edit-profile-heading h1 {
+    font-size: 29px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+  .edit-profile-page {
+    align-items: flex-start;
+    padding: 15px 10px;
+  }
+
+  .edit-profile-card {
+    padding: 25px 18px;
+    border-radius: 16px;
+  }
+
+  .edit-profile-heading h1 {
+    font-size: 26px;
+  }
+
+  .edit-profile-actions {
+    flex-direction: column-reverse;
+  }
+
+  .edit-profile-cancel,
+  .edit-profile-save {
+    width: 100%;
+  }
+}

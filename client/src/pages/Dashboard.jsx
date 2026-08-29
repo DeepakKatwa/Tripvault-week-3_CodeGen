@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
 import TripCard from "../components/TripCard";
 import TripForm from "../components/TripForm";
+
 import {
   fetchTrips,
   createTrip,
   updateTrip,
   deleteTrip,
+  uploadTripPhoto,
 } from "../services/tripService";
+
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const user = JSON.parse(
+    localStorage.getItem("user") || "{}"
+  );
 
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,6 +26,10 @@ const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingTrip, setEditingTrip] = useState(null);
   const [search, setSearch] = useState("");
+
+  // ==========================================
+  // LOAD TRIPS
+  // ==========================================
 
   const loadTrips = async () => {
     setLoading(true);
@@ -43,34 +52,88 @@ const Dashboard = () => {
     loadTrips();
   }, []);
 
+  // ==========================================
+  // OPEN CREATE FORM
+  // ==========================================
+
   const openCreateForm = () => {
     setEditingTrip(null);
     setShowForm(true);
   };
+
+  // ==========================================
+  // OPEN EDIT FORM
+  // ==========================================
 
   const openEditForm = (trip) => {
     setEditingTrip(trip);
     setShowForm(true);
   };
 
+  // ==========================================
+  // CLOSE FORM
+  // ==========================================
+
   const closeForm = () => {
     setShowForm(false);
     setEditingTrip(null);
   };
 
-  const handleSubmit = async (formData) => {
+  // ==========================================
+  // CREATE / UPDATE TRIP + WEEK 3 PHOTO UPLOAD
+  // ==========================================
+
+  const handleSubmit = async ({
+    tripData,
+    imageFile,
+  }) => {
     try {
+      let savedTrip;
+
+      // -------------------------------
+      // EDIT EXISTING TRIP
+      // -------------------------------
+
       if (editingTrip) {
-        await updateTrip(editingTrip._id, formData);
-      } else {
-        await createTrip(formData);
+        const response = await updateTrip(
+          editingTrip._id,
+          tripData
+        );
+
+        savedTrip = response.data;
+      }
+
+      // -------------------------------
+      // CREATE NEW TRIP
+      // -------------------------------
+
+      else {
+        const response = await createTrip(tripData);
+
+        savedTrip = response.data;
+      }
+
+      // -------------------------------
+      // WEEK 3 - UPLOAD PHOTO
+      // -------------------------------
+
+      if (imageFile && savedTrip?._id) {
+        await uploadTripPhoto(
+          savedTrip._id,
+          imageFile
+        );
       }
 
       closeForm();
+
       await loadTrips();
 
-      return { success: true };
+      return {
+        success: true,
+      };
     } catch (err) {
+      console.error("Trip save error:", err);
+
       return {
         error:
           err.response?.data?.message ||
@@ -78,6 +141,10 @@ const Dashboard = () => {
       };
     }
   };
+
+  // ==========================================
+  // DELETE TRIP
+  // ==========================================
 
   const handleDelete = async (id) => {
     try {
@@ -91,22 +158,42 @@ const Dashboard = () => {
     }
   };
 
+  // ==========================================
+  // LOGOUT
+  // ==========================================
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    navigate("/login", { replace: true });
+    navigate("/login", {
+      replace: true,
+    });
   };
+
+  // ==========================================
+  // SEARCH
+  // ==========================================
 
   const filteredTrips = trips.filter((trip) => {
     const keyword = search.toLowerCase();
 
     return (
-      trip.title?.toLowerCase().includes(keyword) ||
-      trip.destination?.toLowerCase().includes(keyword) ||
-      trip.location?.toLowerCase().includes(keyword)
+      trip.title
+        ?.toLowerCase()
+        .includes(keyword) ||
+      trip.destination
+        ?.toLowerCase()
+        .includes(keyword) ||
+      trip.location
+        ?.toLowerCase()
+        .includes(keyword)
     );
   });
+
+  // ==========================================
+  // UPCOMING TRIPS
+  // ==========================================
 
   const upcomingTrips = trips.filter((trip) => {
     if (!trip.startDate) return false;
@@ -120,10 +207,14 @@ const Dashboard = () => {
   return (
     <div className="tripvault-layout">
 
-      {/* SIDEBAR */}
+      {/* =====================================
+          SIDEBAR
+      ====================================== */}
+
       <aside className="tripvault-sidebar">
 
         <div className="tripvault-logo">
+
           <div className="tripvault-logo-icon">
             ✈
           </div>
@@ -132,9 +223,12 @@ const Dashboard = () => {
             <h2>TripVault</h2>
             <span>Your Travel Space</span>
           </div>
+
         </div>
 
-        <p className="sidebar-label">MENU</p>
+        <p className="sidebar-label">
+          MENU
+        </p>
 
         <nav className="tripvault-nav">
 
@@ -144,7 +238,10 @@ const Dashboard = () => {
               navigate("/dashboard")
             }
           >
-            <span className="nav-icon">⌂</span>
+            <span className="nav-icon">
+              ⌂
+            </span>
+
             Dashboard
           </button>
 
@@ -154,7 +251,10 @@ const Dashboard = () => {
               navigate("/dashboard")
             }
           >
-            <span className="nav-icon">✈</span>
+            <span className="nav-icon">
+              ✈
+            </span>
+
             My Trips
           </button>
 
@@ -164,7 +264,10 @@ const Dashboard = () => {
               navigate("/documents")
             }
           >
-            <span className="nav-icon">▣</span>
+            <span className="nav-icon">
+              ▣
+            </span>
+
             Documents
           </button>
 
@@ -174,8 +277,42 @@ const Dashboard = () => {
               navigate("/memories")
             }
           >
-            <span className="nav-icon">◉</span>
+            <span className="nav-icon">
+              ◉
+            </span>
+
             Memories
+          </button>
+
+
+          <button
+            className="nav-item"
+            onClick={() => {
+              if (user.username) {
+                navigate(`/profile/${user.username}`);
+              } else {
+                navigate("/edit-profile");
+              }
+            }}
+          >
+            <span className="nav-icon">
+              ◎
+            </span>
+
+            My Profile
+          </button>
+
+          <button
+            className="nav-item"
+            onClick={() =>
+              navigate("/edit-profile")
+            }
+          >
+            <span className="nav-icon">
+              ✎
+            </span>
+
+            Edit Profile
           </button>
 
         </nav>
@@ -185,16 +322,21 @@ const Dashboard = () => {
           <div className="sidebar-profile">
 
             <div className="profile-avatar">
-              {user.name?.slice(0, 1).toUpperCase() ||
-                "T"}
+              {user.name
+                ?.slice(0, 1)
+                .toUpperCase() || "T"}
             </div>
 
             <div className="profile-info">
+
               <strong>
                 {user.name || "Traveller"}
               </strong>
 
-              <span>{user.email}</span>
+              <span>
+                {user.email}
+              </span>
+
             </div>
 
           </div>
@@ -210,25 +352,36 @@ const Dashboard = () => {
 
       </aside>
 
-      {/* MAIN AREA */}
+      {/* =====================================
+          MAIN AREA
+      ====================================== */}
+
       <main className="tripvault-main">
 
         {/* TOP HEADER */}
+
         <header className="tripvault-topbar">
 
           <div>
-            <h3>Travel Dashboard</h3>
+
+            <h3>
+              Travel Dashboard
+            </h3>
 
             <p>
               Plan, organize and remember every
               journey.
             </p>
+
           </div>
 
           <div className="topbar-actions">
 
             <div className="dashboard-search">
-              <span>⌕</span>
+
+              <span>
+                ⌕
+              </span>
 
               <input
                 type="text"
@@ -238,6 +391,7 @@ const Dashboard = () => {
                   setSearch(e.target.value)
                 }
               />
+
             </div>
 
             <button className="notification-btn">
@@ -246,15 +400,25 @@ const Dashboard = () => {
             </button>
 
             <div className="top-profile">
+
               <div className="top-profile-avatar">
-                {user.name?.slice(0, 1).toUpperCase() ||
-                  "T"}
+                {user.name
+                  ?.slice(0, 1)
+                  .toUpperCase() || "T"}
               </div>
 
               <div>
-                <strong>{firstName}</strong>
-                <span>Traveller</span>
+
+                <strong>
+                  {firstName}
+                </strong>
+
+                <span>
+                  Traveller
+                </span>
+
               </div>
+
             </div>
 
           </div>
@@ -263,10 +427,14 @@ const Dashboard = () => {
 
         <div className="tripvault-content">
 
-          {/* WELCOME SECTION */}
+          {/* =====================================
+              WELCOME
+          ====================================== */}
+
           <section className="welcome-section">
 
             <div>
+
               <p className="welcome-label">
                 WELCOME TO YOUR VAULT
               </p>
@@ -281,26 +449,31 @@ const Dashboard = () => {
                 journeys, documents and memories
                 organized in one place.
               </p>
+
             </div>
 
             <button
               className="new-trip-btn"
               onClick={openCreateForm}
             >
-              <span>＋</span>
+              <span>
+                ＋
+              </span>
+
               Create New Trip
             </button>
 
           </section>
 
-          {/* HERO */}
+          {/* =====================================
+              HERO
+          ====================================== */}
+
           <section className="travel-hero">
 
-            <div className="hero-decoration hero-circle-one">
-            </div>
+            <div className="hero-decoration hero-circle-one"></div>
 
-            <div className="hero-decoration hero-circle-two">
-            </div>
+            <div className="hero-decoration hero-circle-two"></div>
 
             <div className="hero-left">
 
@@ -347,7 +520,10 @@ const Dashboard = () => {
 
           </section>
 
-          {/* STATS */}
+          {/* =====================================
+              STATS
+          ====================================== */}
+
           <section className="dashboard-stats">
 
             <div className="stat-card">
@@ -357,11 +533,19 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <span>Total Trips</span>
 
-                <h3>{trips.length}</h3>
+                <span>
+                  Total Trips
+                </span>
 
-                <p>Journeys in your vault</p>
+                <h3>
+                  {trips.length}
+                </h3>
+
+                <p>
+                  Journeys in your vault
+                </p>
+
               </div>
 
             </div>
@@ -373,11 +557,19 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <span>Upcoming</span>
 
-                <h3>{upcomingTrips.length}</h3>
+                <span>
+                  Upcoming
+                </span>
 
-                <p>Adventures waiting</p>
+                <h3>
+                  {upcomingTrips.length}
+                </h3>
+
+                <p>
+                  Adventures waiting
+                </p>
+
               </div>
 
             </div>
@@ -389,11 +581,19 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <span>Documents</span>
 
-                <h3>Safe</h3>
+                <span>
+                  Documents
+                </span>
 
-                <p>Travel files organized</p>
+                <h3>
+                  Safe
+                </h3>
+
+                <p>
+                  Travel files organized
+                </p>
+
               </div>
 
             </div>
@@ -405,26 +605,43 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <span>Memories</span>
 
-                <h3>∞</h3>
+                <span>
+                  Memories
+                </span>
 
-                <p>Moments worth keeping</p>
+                <h3>
+                  ∞
+                </h3>
+
+                <p>
+                  Moments worth keeping
+                </p>
+
               </div>
 
             </div>
 
           </section>
 
-          {/* SECTION HEADER */}
+          {/* =====================================
+              MY TRIPS
+          ====================================== */}
+
           <section className="trips-section">
 
             <div className="section-heading">
 
               <div>
-                <p>YOUR JOURNEYS</p>
 
-                <h2>My Trips</h2>
+                <p>
+                  YOUR JOURNEYS
+                </p>
+
+                <h2>
+                  My Trips
+                </h2>
+
               </div>
 
               <div className="section-actions">
@@ -448,6 +665,7 @@ const Dashboard = () => {
             </div>
 
             {/* LOADING */}
+
             {loading && (
               <div className="dashboard-loading">
 
@@ -455,7 +673,9 @@ const Dashboard = () => {
                   ✈
                 </div>
 
-                <h3>Opening your travel vault...</h3>
+                <h3>
+                  Opening your travel vault...
+                </h3>
 
                 <p>
                   Loading your journeys.
@@ -465,16 +685,21 @@ const Dashboard = () => {
             )}
 
             {/* ERROR */}
+
             {!loading && error && (
               <div className="dashboard-error-box">
 
-                <div>!</div>
+                <div>
+                  !
+                </div>
 
                 <h3>
                   We couldn't load your trips
                 </h3>
 
-                <p>{error}</p>
+                <p>
+                  {error}
+                </p>
 
                 <button onClick={loadTrips}>
                   Try Again
@@ -484,6 +709,7 @@ const Dashboard = () => {
             )}
 
             {/* EMPTY */}
+
             {!loading &&
               !error &&
               trips.length === 0 && (
@@ -516,10 +742,10 @@ const Dashboard = () => {
                   </button>
 
                 </div>
-
               )}
 
             {/* SEARCH EMPTY */}
+
             {!loading &&
               !error &&
               trips.length > 0 &&
@@ -527,13 +753,16 @@ const Dashboard = () => {
 
                 <div className="search-empty">
 
-                  <div>⌕</div>
+                  <div>
+                    ⌕
+                  </div>
 
-                  <h3>No trips found</h3>
+                  <h3>
+                    No trips found
+                  </h3>
 
                   <p>
-                    No journey matches
-                    "{search}".
+                    No journey matches "{search}".
                   </p>
 
                   <button
@@ -545,39 +774,45 @@ const Dashboard = () => {
                   </button>
 
                 </div>
-
               )}
 
-            {/* TRIPS */}
+            {/* TRIP CARDS */}
+
             {!loading &&
               !error &&
               filteredTrips.length > 0 && (
 
                 <div className="dashboard-trip-grid">
 
-                  {filteredTrips.map((trip) => (
+                  {filteredTrips.map(
+                    (trip) => (
 
-                    <TripCard
-                      key={trip._id}
-                      trip={trip}
-                      onEdit={openEditForm}
-                      onDelete={handleDelete}
-                    />
+                      <TripCard
+                        key={trip._id}
+                        trip={trip}
+                        onEdit={openEditForm}
+                        onDelete={handleDelete}
+                      />
 
-                  ))}
+                    )
+                  )}
 
                 </div>
-
               )}
 
           </section>
 
-          {/* QUICK ACTION AREA */}
+          {/* =====================================
+              QUICK ACTIONS
+          ====================================== */}
+
           <section className="quick-actions-section">
 
             <div className="quick-heading">
 
-              <p>QUICK ACCESS</p>
+              <p>
+                QUICK ACCESS
+              </p>
 
               <h2>
                 Everything for your journey
@@ -597,6 +832,7 @@ const Dashboard = () => {
                 </div>
 
                 <div>
+
                   <strong>
                     Plan a Trip
                   </strong>
@@ -604,9 +840,12 @@ const Dashboard = () => {
                   <span>
                     Create your next adventure
                   </span>
+
                 </div>
 
-                <b>→</b>
+                <b>
+                  →
+                </b>
 
               </button>
 
@@ -622,6 +861,7 @@ const Dashboard = () => {
                 </div>
 
                 <div>
+
                   <strong>
                     Travel Documents
                   </strong>
@@ -629,9 +869,12 @@ const Dashboard = () => {
                   <span>
                     Keep important files safe
                   </span>
+
                 </div>
 
-                <b>→</b>
+                <b>
+                  →
+                </b>
 
               </button>
 
@@ -647,6 +890,7 @@ const Dashboard = () => {
                 </div>
 
                 <div>
+
                   <strong>
                     Travel Memories
                   </strong>
@@ -654,9 +898,12 @@ const Dashboard = () => {
                   <span>
                     Preserve special moments
                   </span>
+
                 </div>
 
-                <b>→</b>
+                <b>
+                  →
+                </b>
 
               </button>
 
@@ -666,7 +913,10 @@ const Dashboard = () => {
 
         </div>
 
-        {/* CREATE / EDIT MODAL */}
+        {/* =====================================
+            CREATE / EDIT TRIP MODAL
+        ====================================== */}
+
         {showForm && (
           <TripForm
             initialData={editingTrip}

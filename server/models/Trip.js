@@ -1,47 +1,69 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const tripSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, 'Trip title is required'],
+      required: [true, "Trip title is required"],
       trim: true,
     },
+
     destination: {
       type: String,
-      required: [true, 'Destination is required'],
+      required: [true, "Destination is required"],
       trim: true,
     },
+
     startDate: {
       type: Date,
-      required: [true, 'Start date is required'],
+      required: [true, "Start date is required"],
     },
+
     endDate: {
       type: Date,
-      required: [true, 'End date is required'],
+      required: [true, "End date is required"],
       validate: {
-        validator(value) { return !this.startDate || value >= this.startDate; },
-        message: 'End date cannot be before start date',
+        validator(value) {
+          return !this.startDate || value >= this.startDate;
+        },
+        message: "End date cannot be before start date",
       },
     },
+
     description: {
       type: String,
-      default: '',
+      default: "",
       trim: true,
       maxlength: 1000,
     },
+
     rating: {
       type: Number,
       min: 1,
       max: 5,
     },
+
+    // Week 3 - Main cover image for the trip
+    coverImage: {
+      type: String,
+      default: "",
+    },
+
+    // Week 3 - Multiple Cloudinary photo URLs
+    photos: {
+      type: [String],
+      default: [],
+    },
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model('Trip', tripSchema);
+module.exports = mongoose.model("Trip", tripSchema);

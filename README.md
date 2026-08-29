@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TripVault - Complete Week 2 MERN Project
 
 TripVault is a secure personal travel journal. This version completes every item in the supplied Week 2 PDF: authentication, protected trip CRUD, ownership checks, automatic UI refresh, loading/error states, and a responsive dashboard.
@@ -47,3 +48,6 @@ If your MongoDB password contains `@`, `#`, `%` or `/`, URL-encode it. Never upl
 | GET | `/api/trips/:id` | Private, owner only |
 | PUT | `/api/trips/:id` | Private, owner only |
 | DELETE | `/api/trips/:id` | Private, owner only |
+=======
+# Tripvault-week-2_CodeGen
+>>>>>>> 6feb1426d0b637b7a6e67873ab56b56737499bdf

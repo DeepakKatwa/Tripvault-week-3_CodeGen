@@ -1,19 +1,39 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const protect = require('../middleware/auth');
+
+const protect = require("../middleware/auth");
+const upload = require("../middleware/upload");
+
 const {
   createTrip,
   getTrips,
   getTripById,
   updateTrip,
   deleteTrip,
-} = require('../controllers/tripController');
+  uploadTripPhoto,
+} = require("../controllers/tripController");
 
-// All trip routes require a valid JWT
-router.post('/', protect, createTrip);
-router.get('/', protect, getTrips);
-router.get('/:id', protect, getTripById);
-router.put('/:id', protect, updateTrip);
-router.delete('/:id', protect, deleteTrip);
+// Create trip
+router.post("/", protect, createTrip);
+
+// Get all logged-in user's trips
+router.get("/", protect, getTrips);
+
+// Get one trip
+router.get("/:id", protect, getTripById);
+
+// Update trip
+router.put("/:id", protect, updateTrip);
+
+// Delete trip
+router.delete("/:id", protect, deleteTrip);
+
+// Week 3 - Upload trip photo to Cloudinary
+router.post(
+  "/:id/upload",
+  protect,
+  upload.single("image"),
+  uploadTripPhoto
+);
 
 module.exports = router;
